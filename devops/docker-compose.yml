@@ -1,0 +1,73 @@
+version: '3.6'
+
+services:
+
+   sonarqube:
+#     build:
+#       context: sonarqube/
+     image: dockerdonegal/dd-sonarqube:latest
+
+     ports:
+       - 9000:9000
+     #container_name: sonarqube
+     networks:
+     - dd-network
+     environment:
+       - SONARQUBE_JDBC_URL=jdbc:postgresql://postgresdb:5432/sonar
+     volumes:
+       - ./data/sonar/sonarqube/conf:/opt/sonarqube/conf
+       - ./data/sonar/sonarqube/data:/opt/sonarqube/data
+       - ./data/sonar/sonarqube/extensions:/opt/sonarqube/extensions
+
+   postgresdb:
+     #build:
+       #context: postgres/
+     image: dockerdonegal/dd-postgres:latest
+     #container_name: postgresdb
+     networks:
+     - dd-network
+     environment:
+       - POSTGRES_USER=sonar
+       - POSTGRES_PASSWORD=sonar
+     volumes:
+       - ./data/postgresql:/var/lib/postgresql
+       # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+       - ./data/postgresql_data:/var/lib/postgresql/data
+
+   jenkins:
+     image: dockerdonegal/dd-jenkins:latest
+#     build:
+#       context: jenkins/
+     ports:
+       - 8080:8080
+     networks:
+     - dd-network
+     #container_name: jenkins
+     volumes:
+       - ./data/jenkins:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
+       - /var/run/docker.sock:/var/run/docker.sock
+
+   mongodb:
+#     build:
+#       context: mongo/
+     image: dockerdonegal/dd-mongo:latest
+     #container_name: "mongodb"
+     networks:
+     - dd-network
+     environment:
+       MONGO_DATA_DIR: /data/db
+       MONGO_LOG_DIR: /dev/null
+       MONGODB_APPLICATION_USER: ninja
+       MONGODB_APPLICATION_DATABASE: ninja
+       MONGODB_APPLICATION_PASS: ninja
+       MONGODB_ADMIN_USER: admin
+       MONGODB_ADMIN_USER: admin
+     volumes:
+       - ./data/mongo/db:/data/db
+     ports:
+       - 27017:27017
+     command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+networks:
+  dd-network:
+    external: true

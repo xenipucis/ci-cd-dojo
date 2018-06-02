@@ -15,3 +15,14 @@ docker push dockerdonegal/dd-postgres:latest
 docker build --file ./sonarqube/Dockerfile -t dockerdonegal/dd-sonarqube:latest ./sonarqube
 docker push dockerdonegal/dd-sonarqube:latest
 ```
+
+Deploy stack
+```markdown
+docker stack deploy --compose-file docker-compose.yml ddninja
+```
+
+Delete Stack
+```markdown
+docker stack rm $(docker stack ls --format '{{.Name}}')
+docker container prune -f
+```
