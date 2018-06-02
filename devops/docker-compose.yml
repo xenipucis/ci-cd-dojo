@@ -10,29 +10,47 @@ services:
      ports:
        - 9000:9000
      #container_name: sonarqube
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+#       resources:
+#         limits:
+#           memory: 1024M
+#         reservations:
+#           memory: 1024M
      networks:
      - dd-network
      environment:
        - SONARQUBE_JDBC_URL=jdbc:postgresql://postgresdb:5432/sonar
-     volumes:
-       - ./data/sonar/sonarqube/conf:/opt/sonarqube/conf
-       - ./data/sonar/sonarqube/data:/opt/sonarqube/data
-       - ./data/sonar/sonarqube/extensions:/opt/sonarqube/extensions
+#     volumes:
+#       - ./data/sonar/sonarqube/conf:/opt/sonarqube/conf
+#       - ./data/sonar/sonarqube/data:/opt/sonarqube/data
+#       - ./data/sonar/sonarqube/extensions:/opt/sonarqube/extensions
 
    postgresdb:
      #build:
        #context: postgres/
      image: dockerdonegal/dd-postgres:latest
      #container_name: postgresdb
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+#       resources:
+#         limits:
+#           memory: 1024M
+#         reservations:
+#           memory: 1024M
      networks:
      - dd-network
      environment:
        - POSTGRES_USER=sonar
        - POSTGRES_PASSWORD=sonar
-     volumes:
-       - ./data/postgresql:/var/lib/postgresql
+#     volumes:
+#       - ./data/postgresql:/var/lib/postgresql
        # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
-       - ./data/postgresql_data:/var/lib/postgresql/data
+#       - ./data/postgresql_data:/var/lib/postgresql/data
 
    jenkins:
      image: dockerdonegal/dd-jenkins:latest
@@ -40,18 +58,36 @@ services:
 #       context: jenkins/
      ports:
        - 8080:8080
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+#       resources:
+#         limits:
+#           memory: 1024M
+#         reservations:
+#           memory: 1024M
      networks:
      - dd-network
      #container_name: jenkins
-     volumes:
-       - ./data/jenkins:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
-       - /var/run/docker.sock:/var/run/docker.sock
+#     volumes:
+#       - ./data/jenkins:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
+#       - /var/run/docker.sock:/var/run/docker.sock
 
    mongodb:
 #     build:
 #       context: mongo/
      image: dockerdonegal/dd-mongo:latest
      #container_name: "mongodb"
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+#       resources:
+#         limits:
+#           memory: 1024M
+#         reservations:
+#           memory: 1024M
      networks:
      - dd-network
      environment:
@@ -62,8 +98,8 @@ services:
        MONGODB_APPLICATION_PASS: ninja
        MONGODB_ADMIN_USER: admin
        MONGODB_ADMIN_USER: admin
-     volumes:
-       - ./data/mongo/db:/data/db
+#     volumes:
+#       - ./data/mongo/db:/data/db
      ports:
        - 27017:27017
      command: mongod --smallfiles --logpath=/dev/null # --quiet
