@@ -2,4 +2,4 @@
 docker/dev/mongo/db
 **/*.iml
 web/target
-
+**/target
