@@ -4,6 +4,8 @@ import ie.dockerdonegal.ninja.bean.Ninja;
 import ie.dockerdonegal.ninja.dto.NinjaDTO;
 import ie.dockerdonegal.ninja.response.NinjasResponse;
 import ie.dockerdonegal.ninja.service.NinjaService;
+import ie.dockerdonegal.ninja.transform.NinjaDTOToNinjaTransformer;
+import ie.dockerdonegal.ninja.transform.NinjaToNinjaDTOTransformer;
 import ie.dockerdonegal.ninja.transform.Transformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,13 +27,14 @@ public class NinjaController {
 
     private final NinjaService ninjaService;
 
-    private final Transformer<Ninja, NinjaDTO> ninjaToNinjaDTOTransformer;
-    private final Transformer<NinjaDTO, Ninja> ninjaDTOToNinjaTransformer;
+    private final NinjaToNinjaDTOTransformer ninjaToNinjaDTOTransformer;
+
+    private final NinjaDTOToNinjaTransformer ninjaDTOToNinjaTransformer;
 
     @Autowired
     public NinjaController(final NinjaService ninjaService,
-                           final Transformer<Ninja, NinjaDTO> ninjaToNinjaDTOTransformer,
-                           final Transformer<NinjaDTO, Ninja> ninjaDTOToNinjaTransformer) {
+                           final NinjaToNinjaDTOTransformer ninjaToNinjaDTOTransformer,
+                           final NinjaDTOToNinjaTransformer ninjaDTOToNinjaTransformer) {
         this.ninjaService = ninjaService;
         this.ninjaToNinjaDTOTransformer = ninjaToNinjaDTOTransformer;
         this.ninjaDTOToNinjaTransformer = ninjaDTOToNinjaTransformer;

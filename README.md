@@ -36,3 +36,9 @@ POST: http://localhost:8080/ninja/save
    	}
 }
 ```
+```
+git flow init //accept defaults
+git flow feature start add-unit-tests
+git branch // to check which branch you are in
+
+```
