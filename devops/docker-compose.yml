@@ -1,0 +1,89 @@
+version: '3.6'
+
+services:
+
+   sonarqube:
+     image: dockerdonegal/dd-sonarqube:latest
+     ports:
+       - 9000:9000
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+     networks:
+     - dd-network
+     environment:
+       - SONARQUBE_JDBC_USERNAME=sonar
+       - SONARQUBE_JDBC_PASSWORD=sonar
+     volumes:
+       - sonarqube_conf:/opt/sonarqube/conf
+       - sonarqube_data:/opt/sonarqube/data
+       - sonarqube_extensions:/opt/sonarqube/extensions
+       - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugin
+
+   postgresdb:
+     image: dockerdonegal/dd-postgres:latest
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+     networks:
+     - dd-network
+     environment:
+       - POSTGRES_USER=sonar
+       - POSTGRES_PASSWORD=sonar
+     volumes:
+       - postgresql:/var/lib/postgresql
+       # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+       - postgresql_data:/var/lib/postgresql/data
+
+   jenkins:
+     image: dockerdonegal/dd-jenkins:latest
+     user: root
+     ports:
+       - 8080:8080
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+     networks:
+     - dd-network
+     volumes:
+       - jenkins_home:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
+       - /var/run/docker.sock:/var/run/docker.sock
+
+   mongodb:
+     image: dockerdonegal/dd-mongo:latest
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+     networks:
+     - dd-network
+     environment:
+       - MONGO_DATA_DIR=/data/db
+       - MONGO_LOG_DIR=/dev/null
+       - APPLICATION_USER=ninja
+       - APPLICATION_DATABASE=ninja
+       - APPLICATION_PASS=ninja
+       - MONGODB_ADMIN_USER=admin
+       - MONGODB_ADMIN_PASS=admin
+     volumes:
+       - mongo:/data/db
+     ports:
+       - 27017:27017
+     command: mongod --smallfiles --logpath=/dev/null # --quiet
+
+networks:
+  dd-network:
+    external: true
+
+volumes:
+  jenkins_home:
+  postgresql:
+  postgresql_data:
+  sonarqube_bundled_plugins:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  mongo:
