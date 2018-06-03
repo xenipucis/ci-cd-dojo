@@ -6,10 +6,10 @@ ENV AUTH yes
 ENV STORAGE_ENGINE wiredTiger
 ENV JOURNALING yes
 
-ADD run.sh /run.sh
-RUN chmod +x /run.sh
+ADD internal-run.sh /internal-run.sh
+RUN chmod a+x /internal-run.sh
 
 ADD set_mongodb_password.sh /set_mongodb_password.sh
-RUN chmod +x /set_mongodb_password.sh
+RUN chmod a+x /set_mongodb_password.sh
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/internal-run.sh"]

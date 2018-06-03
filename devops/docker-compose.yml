@@ -61,13 +61,13 @@ services:
      networks:
      - dd-network
      environment:
-       MONGO_DATA_DIR: /data/db
-       MONGO_LOG_DIR: /dev/null
-       MONGODB_APPLICATION_USER: ninja
-       MONGODB_APPLICATION_DATABASE: ninja
-       MONGODB_APPLICATION_PASS: ninja
-       MONGODB_ADMIN_USER: admin
-       MONGODB_ADMIN_USER: admin
+       - MONGO_DATA_DIR=/data/db
+       - MONGO_LOG_DIR=/dev/null
+       - APPLICATION_USER=ninja
+       - APPLICATION_DATABASE=ninja
+       - APPLICATION_PASS=ninja
+       - MONGODB_ADMIN_USER=admin
+       - MONGODB_ADMIN_PASS=admin
      volumes:
        - mongo:/data/db
      ports:

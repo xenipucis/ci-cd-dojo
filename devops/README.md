@@ -17,7 +17,7 @@ docker push dockerdonegal/dd-sonarqube:latest
 ```
 
 ```
-docker network create --driver overlay --attachable dd-network
+docker network create --driver overlay --attachable dd-netw
 
 ```
 
