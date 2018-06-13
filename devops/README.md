@@ -54,4 +54,4 @@ Check created services
 docker service ls
 ```
 
-* Where do I find the sintax for docker-compose.yml?
+* Where do I find the syntax for docker-compose.yml?
