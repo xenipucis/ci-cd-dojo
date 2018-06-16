@@ -26,7 +26,7 @@ pipeline {
     stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t dockerdonegal/helloworld:v2 .'
+        sh 'docker build -t javapi/ci-cd-dojo:v0.0.1 .'
       }
     }
     stage('Docker Push') {
@@ -34,7 +34,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push dockerdonegal/helloworld:v2'
+          sh 'docker push javapi/ci-cd-dojo:v0.0.1'
         }
       }
     }
