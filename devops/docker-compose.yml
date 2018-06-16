@@ -1,9 +1,9 @@
 version: '3.6'
 
+# TODO Replace any javapi or dockerdonegal entry with your dockerhub account
 services:
-
    sonarqube:
-     image: dockerdonegal/dd-sonarqube:latest
+     image: javapi/dd-sonarqube:latest
      ports:
        - 9000:9000
      deploy:
@@ -23,7 +23,7 @@ services:
        - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugin
 
    postgresdb:
-     image: dockerdonegal/dd-postgres:latest
+     image: javapi/dd-postgres:latest
      deploy:
        replicas: 1
        restart_policy:
@@ -39,7 +39,7 @@ services:
        - postgresql_data:/var/lib/postgresql/data
 
    jenkins:
-     image: dockerdonegal/dd-jenkins:latest
+     image: javapi/dd-jenkins:latest
      user: root
      ports:
        - 8080:8080
@@ -54,7 +54,7 @@ services:
        - /var/run/docker.sock:/var/run/docker.sock
 
    mongodb:
-     image: dockerdonegal/dd-mongo:latest
+     image: javapi/dd-mongo:latest
      deploy:
        replicas: 1
        restart_policy:
@@ -73,7 +73,7 @@ services:
        - mongo:/data/db
      ports:
        - 27017:27017
-     command: mongod --smallfiles --logpath=/dev/null --quiet
+     command: --smallfiles
 
 networks:
   dd-network:
