@@ -44,15 +44,6 @@ pipeline {
                 }
             }
         }
-        stage('Docker Push') {
-            agent any
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push javapi/ci-cd-dojo:v0.0.1'
-                }
-            }
-        }
         stage('Deploy QA') {
             agent any
             steps {
