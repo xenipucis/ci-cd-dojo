@@ -68,3 +68,6 @@ docker service ls
 * What is an overlay network?
 * On the docker-compose.yml, why networks.dd-network.external = true?
 * On the docker-compose.yml why volumes being declared at bottom?
+
+> NOTE: 
+> [create-credentials-from-groovy](https://support.cloudbees.com/hc/en-us/articles/217708168-create-credentials-from-groovy)
