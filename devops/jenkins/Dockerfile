@@ -32,7 +32,8 @@ nexus-artifact-uploader \
 slack \
 workflow-aggregator \
 sonar \
-subversion
+subversion \
+sonar-quality-gates
 
 COPY ./home/ /var/jenkins_home/
 RUN ls -laN /var/jenkins_home/*

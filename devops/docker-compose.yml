@@ -3,7 +3,7 @@ version: '3.6'
 # TODO Replace any javapi or dockerdonegal entry with your dockerhub account
 services:
    sonarqube:
-     image: javapi/dd-sonarqube:latest
+     image: sonarqube:latest
      ports:
        - 9000:9000
      deploy:
@@ -13,7 +13,6 @@ services:
      networks:
      - dd-network
      environment:
-       - SONARQUBE_JDBC_URL=jdbc:postgresql://postgresdb:5432/sonar
        - SONARQUBE_JDBC_USERNAME=sonar
        - SONARQUBE_JDBC_PASSWORD=sonar
      volumes:
@@ -21,22 +20,6 @@ services:
        - sonarqube_data:/opt/sonarqube/data
        - sonarqube_extensions:/opt/sonarqube/extensions
        - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugin
-
-   postgresdb:
-     image: javapi/dd-postgres:latest
-     deploy:
-       replicas: 1
-       restart_policy:
-         condition: any
-     networks:
-     - dd-network
-     environment:
-       - POSTGRES_USER=sonar
-       - POSTGRES_PASSWORD=sonar
-     volumes:
-       - postgresql:/var/lib/postgresql
-       # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
-       - postgresql_data:/var/lib/postgresql/data
 
    jenkins:
      image: javapi/dd-jenkins:latest
@@ -47,9 +30,9 @@ services:
        replicas: 1
        restart_policy:
          condition: any
-     configs:
-       - source: jenkins-custom-credentials
-         target: /usr/share/jenkins/ref/init.groovy.d/custom.groovy
+#     configs:
+#       - source: jenkins-custom-credentials
+#         target: /usr/share/jenkins/ref/init.groovy.d/custom.groovy
      networks:
      - dd-network
      volumes:
@@ -84,14 +67,12 @@ networks:
 
 volumes:
   jenkins_home:
-  postgresql:
-  postgresql_data:
   sonarqube_bundled_plugins:
   sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
   mongo:
 
-configs:
-  jenkins-custom-credentials:
-    file: ./jenkins/custom.groovy
+#configs:
+#  jenkins-custom-credentials:
+#    file: ./jenkins/custom.groovy

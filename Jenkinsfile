@@ -13,10 +13,19 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Sonarqube Quality Gate') {
+        stage("SonarQube analysis") {
             agent any
             steps {
-                sh 'echo ADDSTEP'
+                withSonarQubeEnv('localSonarqube') {
+                    sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
+        stage("Quality Gate") {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
         stage('Maven Package') {
