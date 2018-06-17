@@ -4,6 +4,7 @@ version: '3.6'
 services:
    sonarqube:
      image: sonarqube:latest
+     hostname: sonarqube
      ports:
        - 9000:9000
      deploy:

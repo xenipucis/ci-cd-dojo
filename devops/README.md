@@ -1,3 +1,7 @@
+Add entry **ci-cd.dockerdonegal.ie** to your **/etc/hosts**
+```
+127.0.0.1 ci-cd.dockerdonegal.ie
+```
 
 Login your docker account
 ```
