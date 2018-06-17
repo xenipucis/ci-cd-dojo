@@ -59,6 +59,11 @@ Check created services
 docker service ls
 ```
 
+* Go to Jenkins and set dockerHub global credentials.
+* Go to Jenkins and set github global credentials.
+---------------------------------------------------------
+
+
 * Where do I find the syntax for docker-compose.yml?
 * What is an overlay network?
 * On the docker-compose.yml, why networks.dd-network.external = true?

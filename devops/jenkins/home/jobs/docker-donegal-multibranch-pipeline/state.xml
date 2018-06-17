@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.branch.MultiBranchProject_-State plugin="branch-api@2.0.20">
+  <sourceActions>
+    <entry>
+      <string>a3426732-f8cf-499d-b997-bc243c5b189f</string>
+      <list>
+        <jenkins.plugins.git.GitRemoteHeadRefAction plugin="git@3.9.0">
+          <remote>https://github.com/dockerdonegal/ci-cd-dojo.git</remote>
+          <name>master</name>
+        </jenkins.plugins.git.GitRemoteHeadRefAction>
+      </list>
+    </entry>
+  </sourceActions>
+</jenkins.branch.MultiBranchProject_-State>
