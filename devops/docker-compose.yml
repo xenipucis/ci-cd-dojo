@@ -47,6 +47,9 @@ services:
        replicas: 1
        restart_policy:
          condition: any
+     configs:
+       - source: jenkins-custom-credentials
+         target: /usr/share/jenkins/ref/init.groovy.d/custom.groovy
      networks:
      - dd-network
      volumes:
@@ -88,3 +91,7 @@ volumes:
   sonarqube_data:
   sonarqube_extensions:
   mongo:
+
+configs:
+  jenkins-custom-credentials:
+    file: ./jenkins/custom.groovy
