@@ -16,7 +16,7 @@ pipeline {
         stage('Sonarqube Quality Gate') {
             agent any
             steps {
-
+                sh 'echo ADDSTEP'
             }
         }
         stage('Maven Package') {
@@ -56,18 +56,21 @@ pipeline {
         stage('Deploy QA') {
             agent any
             steps {
+                sh 'echo ADDSTEP'
 
             }
         }
         stage('Integration/E2E Tests') {
             agent any
             steps {
+                sh 'echo ADDSTEP'
 
             }
         }
         stage('Deploy PROD') {
             agent any
             steps {
+                sh 'echo ADDSTEP'
 
             }
         }
