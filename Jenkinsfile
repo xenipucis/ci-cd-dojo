@@ -7,7 +7,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v /tmp/ninja/.m2:/root/.m2'
                 }
             }
             steps {
@@ -18,7 +18,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v /tmp/ninja/.m2:/root/.m2'
                 }
             }
             steps {
@@ -45,7 +45,7 @@ pipeline {
             steps {
                 //TODO figure out how to rm optionally without failing
 //                sh 'docker container rm -f ninja-belt-qa'
-                sh 'docker run -d -p 8085:8081 --name ninja-belt-qa dockerdonegal/ninja:v4'
+                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa dockerdonegal/ninja:v4'
 
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '-v $HOME/.m2:/root/.m2'
+                    args '-v /tmp/ninja/.m2:/root/.m2'
                 }
             }
             steps {

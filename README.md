@@ -42,3 +42,5 @@ git flow feature start add-unit-tests
 git branch // to check which branch you are in
 
 ```
+
+Follow documentation of jenkins (pipelines) at https://jenkins.io/doc/book/pipeline/docker/

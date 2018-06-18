@@ -10,5 +10,5 @@ Feature: As a Docker donegal team, we need a way of managing the ninjas and help
 
     Examples:
     | ApplicationURL        | ninjaPayload |
-    | http://127.0.0.1:8085 | {"name": "Romero-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Donegals!"}} |
-    | http://127.0.0.1:8085 | {"name": "GMAN-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Dubs!"}}    |
+    | http://ninja-belt-qa:8085 | {"name": "Romero-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Donegals!"}} |
+    | http://ninja-belt-qa:8085 | {"name": "GMAN-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Dubs!"}}    |
