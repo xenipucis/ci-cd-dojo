@@ -14,7 +14,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "$MAVEN_ARGS"
+                    args "${env.MAVEN_ARGS}"
                 }
             }
             steps {
@@ -25,7 +25,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "${MAVEN_ARGS}"
+                    args "${env.MAVEN_ARGS}"
                 }
             }
             steps {
@@ -35,14 +35,14 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh 'docker build -t ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:v4 .'
+                sh 'docker build -t ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}:v4 .'
             }
         }
 
         stage('Docker TAG QA') {
             agent any
             steps {
-                sh 'docker tag javapi/ninja:v4 ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:v4'
+                sh 'docker tag javapi/ninja:v4 ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:v4'
             }
         }
         stage('Docker Push QA') {
@@ -50,7 +50,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:v4'
+                    sh 'docker push ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:v4'
                 }
             }
         }
@@ -58,7 +58,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-qa || true'
-                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:v4'
+                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:v4'
 
             }
         }
@@ -66,7 +66,7 @@ pipeline {
 //            agent {
 //                docker {
 //                    image 'maven:3.3.3'
-//                    args '${MAVEN_ARGS} --network dd-network'
+//                    args '${env.MAVEN_ARGS} --network dd-network'
 //                }
 //            }
 //            steps {
@@ -77,7 +77,7 @@ pipeline {
         stage('Docker TAG PROD') {
             agent any
             steps {
-                sh 'docker tag ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:v4 $DOCKER_HUB_ACCOUNT/${APPLICATION_NAME}-prod:v4'
+                sh 'docker tag ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}:v4 $DOCKER_HUB_ACCOUNT/${env.APPLICATION_NAME}-prod:v4'
             }
         }
         stage('Docker Push PROD') {
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:v4'
+                    sh 'docker push ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:v4'
                 }
             }
         }
@@ -93,7 +93,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh 'docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:v4'
+                sh 'docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:v4'
 
             }
         }
