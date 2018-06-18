@@ -41,7 +41,8 @@ pipeline {
         stage('Deploy QA') {
             agent any
             steps {
-                sh 'docker container rm -f ninja-belt-qa'
+                //TODO figure out how to rm optionally without failing
+//                sh 'docker container rm -f ninja-belt-qa'
                 sh 'docker run -d -p 85:8080 --name ninja-belt-qa dockerdonegal/ninja:v4'
 
             }
