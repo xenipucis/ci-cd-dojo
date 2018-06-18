@@ -66,18 +66,17 @@ pipeline {
 
             }
         }
-//        stage('Integration/E2E Tests (On QA)') {
-//            agent {
-//                docker {
-//                    image 'maven:3.3.3'
-//                    args "${env.MAVEN_ARGS} --network dd-network"
-//                }
-//            }
-//            steps {
-//                sh 'mvn clean test -f ./ci/pom.xml'
-//            }
-//        }
-
+        stage('Integration/E2E Tests (On QA)') {
+            agent {
+                docker {
+                    image 'maven:3.3.3'
+                    args "${env.MAVEN_ARGS} --network dd-network"
+                }
+            }
+            steps {
+                sh 'mvn clean test -f ./ci/pom.xml'
+            }
+        }
         stage('Docker TAG PROD') {
             agent any
             steps {
