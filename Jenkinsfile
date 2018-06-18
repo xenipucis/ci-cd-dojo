@@ -43,7 +43,7 @@ pipeline {
             steps {
                 //TODO figure out how to rm optionally without failing
 //                sh 'docker container rm -f ninja-belt-qa'
-                sh 'docker run -d -p 85:8080 --name ninja-belt-qa dockerdonegal/ninja:v4'
+                sh 'docker run -d -p 8085:8081 --name ninja-belt-qa dockerdonegal/ninja:v4'
 
             }
         }
@@ -61,7 +61,7 @@ pipeline {
 //            agent any
 //            steps {
 //                sh 'docker container rm -f ninja-belt-prod'
-//                sh 'docker run -d -p 82:8080 --name ninja-belt-prod dockerdonegal/ninja:v4'
+//                sh 'docker run -d -p 8086:8081 --name ninja-belt-prod dockerdonegal/ninja:v4'
 //
 //            }
 //        }
