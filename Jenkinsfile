@@ -88,7 +88,7 @@ pipeline {
             steps {
                 //TODO figure out how to rm optionally without failing
 //                sh 'docker container rm -f ninja-belt-prod'
-                sh 'docker run -d -p 8086:8081 --name ninja-belt-prod dockerdonegal/ninja-prod:v4'
+                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-prod --hostname ninja-belt-prod dockerdonegal/ninja-prod:v4'
 
             }
         }
