@@ -8,12 +8,15 @@ pipeline {
         string(name: 'APPLICATION_TAG_VERSION', defaultValue: 'v0.0.1-WIP', description: 'The application version to be tagged on Docker.')
         string(name: 'MAVEN_ARGS', defaultValue: '-v /tmp/ninja/.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
     }
+    environments {
+        MVN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
+    }
     stages {
         stage('Maven Test') {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '${params.MAVEN_ARGS}'
+                    args '${env.MVN_ARGS}'
                 }
             }
             steps {
