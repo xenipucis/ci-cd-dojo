@@ -28,14 +28,14 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh 'docker build -t dockerdonegal/ninja:v4 .'
+                sh 'docker build -t javapi/ninja:v4 .'
             }
         }
 
         stage('Docker TAG QA') {
             agent any
             steps {
-                sh 'docker tag dockerdonegal/ninja:v4 dockerdonegal/ninja-qa:v4'
+                sh 'docker tag javapi/ninja:v4 javapi/ninja-qa:v4'
             }
         }
         stage('Docker Push QA') {
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push dockerdonegal/ninja-qa:v4'
+                    sh 'docker push javapi/ninja-qa:v4'
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 //TODO figure out how to rm optionally without failing
 //                sh 'docker container rm -f ninja-belt-qa'
-                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa dockerdonegal/ninja-qa:v4'
+                sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa javapi/ninja-qa:v4'
 
             }
         }
@@ -71,7 +71,7 @@ pipeline {
         stage('Docker TAG PROD') {
             agent any
             steps {
-                sh 'docker tag dockerdonegal/ninja:v4 dockerdonegal/ninja-prod:v4'
+                sh 'docker tag javapi/ninja:v4 javapi/ninja-prod:v4'
             }
         }
         stage('Docker Push PROD') {
@@ -79,7 +79,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh 'docker push dockerdonegal/ninja-prod:v4'
+                    sh 'docker push javapi/ninja-prod:v4'
                 }
             }
         }
@@ -88,7 +88,7 @@ pipeline {
             steps {
                 //TODO figure out how to rm optionally without failing
 //                sh 'docker container rm -f ninja-belt-prod'
-                sh 'docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod dockerdonegal/ninja-prod:v4'
+                sh 'docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod javapi/ninja-prod:v4'
 
             }
         }
