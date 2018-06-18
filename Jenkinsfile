@@ -53,7 +53,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '-v /tmp/ninja/.m2:/root/.m2'
+                    args '-v /tmp/ninja/.m2:/root/.m2 --network dd-network'
                 }
             }
             steps {
