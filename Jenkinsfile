@@ -2,12 +2,6 @@
 
 pipeline {
     agent any
-    parameters {
-        string(name: 'DOCKER_HUB_ACCOUNT', defaultValue: 'javapi', description: 'The Docker Hub where youre pulling from and pushing to.')
-        string(name: 'APPLICATION_NAME', defaultValue: 'ninja', description: 'The name of the application on the Docker and pipeline context.')
-        string(name: 'APPLICATION_TAG_VERSION', defaultValue: 'v0.0.1-WIP', description: 'The application version to be tagged on Docker.')
-        string(name: 'MAVEN_ARGS', defaultValue: '-v /tmp/ninja/.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
-    }
     environment {
         MVN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
@@ -63,7 +57,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-qa || true'
-                sh "docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
+                sh "docker run -d -p 8085:8081 --name ninja-belt-qa -h ninja-belt-qa --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
 
             }
         }
@@ -98,7 +92,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh "docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
+                sh "docker run -d -p 8086:8081 --name ninja-belt-prod --h ninja-belt-prod --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
             }
         }
     }
