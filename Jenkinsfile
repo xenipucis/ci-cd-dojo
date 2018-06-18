@@ -2,13 +2,11 @@
 
 pipeline {
     agent any
-    parameters {
-        string(name: 'APPLICATION_NAME', defaultValue: 'ninja', description: 'The name of the application on the Docker and pipeline context.')
-        string(name: 'APPLICATION_TAG_VERSION', defaultValue: 'v0.0.1-WIP', description: 'The application version to be tagged on Docker.')
-    }
     environment {
         MVN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
+        APPLICATION_NAME='ninja'
+        APPLICATION_TAG_VERSION='v0.0.1-WIP'
     }
     stages {
         stage('Maven Test') {
