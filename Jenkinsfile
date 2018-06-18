@@ -2,11 +2,11 @@
 
 pipeline {
     agent any
-    environment {
-        MVN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
-        DOCKER_HUB_ACCOUNT='javapi'
-        APPLICATION_NAME='ninja'
-        APPLICATION_TAG_VERSION='v0.0.1-WIP'
+    parameters {
+        string(name: 'DOCKER_HUB_ACCOUNT', defaultValue: 'javapi', description: 'The Docker Hub where youre pulling from and pushing to.')
+        string(name: 'APPLICATION_NAME', defaultValue: 'ninja', description: 'The name of the application on the Docker and pipeline context.')
+        string(name: 'APPLICATION_TAG_VERSION', defaultValue: 'v0.0.1-WIP', description: 'The application version to be tagged on Docker.')
+        string(name: 'MAVEN_ARGS', defaultValue: '-v /tmp/ninja/.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
     }
     stages {
         stage('Maven Test') {
@@ -34,22 +34,22 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh "docker build -t ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:${APPLICATION_TAG_VERSION} ."
+                sh "docker build -t ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}:${params.APPLICATION_TAG_VERSION} ."
             }
         }
 
         stage('Docker TAG QA') {
             agent any
             steps {
-                sh "docker tag ${DOCKER_HUB_ACCOUNT}/ninja:${APPLICATION_TAG_VERSION} ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
+                sh "docker tag ${params.DOCKER_HUB_ACCOUNT}/ninja:${params.APPLICATION_TAG_VERSION} ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-qa:${params.APPLICATION_TAG_VERSION}"
             }
         }
         stage('Docker Push QA') {
             agent any
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
+                    sh "docker login -u ${params.dockerHubUser} -p ${params.dockerHubPassword}"
+                    sh "docker push ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-qa:${params.APPLICATION_TAG_VERSION}"
                 }
             }
         }
@@ -57,7 +57,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-qa || true'
-                sh "docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
+                sh "docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-qa:${params.APPLICATION_TAG_VERSION}"
 
             }
         }
@@ -76,15 +76,15 @@ pipeline {
         stage('Docker TAG PROD') {
             agent any
             steps {
-                sh "docker tag ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:v4 ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
+                sh "docker tag ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}:v4 ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-prod:${params.APPLICATION_TAG_VERSION}"
             }
         }
         stage('Docker Push PROD') {
             agent any
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-                    sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
+                    sh "docker login -u ${params.dockerHubUser} -p ${params.dockerHubPassword}"
+                    sh "docker push ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-prod:${params.APPLICATION_TAG_VERSION}"
                 }
             }
         }
@@ -92,7 +92,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh "docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
+                sh "docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${params.DOCKER_HUB_ACCOUNT}/${params.APPLICATION_NAME}-prod:${params.APPLICATION_TAG_VERSION}"
             }
         }
     }
