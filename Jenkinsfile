@@ -43,7 +43,7 @@ pipeline {
             steps {
 //                sh 'docker stop ninja-belt'
 //                sh 'docker rm ninja-belt'
-                sh 'docker run -d -p 85:8080 -n ninja-belt dockerdonegal/ninja:v4'
+                sh 'docker run -d -p 85:8080 --name ninja-belt dockerdonegal/ninja:v4'
 
             }
         }
