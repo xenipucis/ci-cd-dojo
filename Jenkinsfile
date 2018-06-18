@@ -41,7 +41,7 @@ pipeline {
         stage('Deploy QA') {
             agent any
             steps {
-                sh 'echo ADDSTEP'
+                sh 'docker run -d -p 85:8080 dockerdonegal/ninja:v4'
 
             }
         }
@@ -58,7 +58,7 @@ pipeline {
         stage('Deploy PROD') {
             agent any
             steps {
-                sh 'echo ADDSTEP'
+                sh 'docker run -d -p 82:8080 dockerdonegal/ninja:v4'
 
             }
         }
