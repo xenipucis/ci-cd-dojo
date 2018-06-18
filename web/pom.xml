@@ -68,6 +68,7 @@
                 <version>${spring.boot.version}</version>
                 <configuration>
                     <mainClass>${main.application.class}</mainClass>
+                    <classifier>uber</classifier>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

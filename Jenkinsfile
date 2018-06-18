@@ -7,20 +7,22 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
+                    args '-v $HOME/.m2:/root/.m2'
                 }
             }
             steps {
                 sh 'mvn test'
             }
         }
-        stage('Maven Package') {
+        stage('Maven Install') {
             agent {
                 docker {
                     image 'maven:3.3.3'
+                    args '-v $HOME/.m2:/root/.m2'
                 }
             }
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean install -DskipTests'
             }
         }
         stage('Docker Build') {
@@ -47,16 +49,17 @@ pipeline {
 
             }
         }
-//        stage('Integration/E2E Tests') {
-//            agent {
-//                docker {
-//                    image 'maven:3.3.3'
-//                }
-//            }
-//            steps {
-//                sh 'mvn clean test -f ./ci/pom.xml'
-//            }
-//        }
+        stage('Integration/E2E Tests') {
+            agent {
+                docker {
+                    image 'maven:3.3.3'
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
+            steps {
+                sh 'mvn clean test -f ./ci/pom.xml'
+            }
+        }
 //        stage('Deploy PROD') {
 //            agent any
 //            steps {
