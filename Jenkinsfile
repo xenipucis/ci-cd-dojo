@@ -50,23 +50,22 @@ pipeline {
         stage('Docker Deploy QA') {
             agent any
             steps {
-                //TODO figure out how to rm optionally without failing
-//                sh 'docker container rm -f ninja-belt-qa'
+                sh 'docker container rm -f ninja-belt-qa || true'
                 sh 'docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa javapi/ninja-qa:v4'
 
             }
         }
-        stage('Integration/E2E Tests (On QA)') {
-            agent {
-                docker {
-                    image 'maven:3.3.3'
-                    args '-v /tmp/ninja/.m2:/root/.m2 --network dd-network'
-                }
-            }
-            steps {
-                sh 'mvn clean test -f ./ci/pom.xml'
-            }
-        }
+//        stage('Integration/E2E Tests (On QA)') {
+//            agent {
+//                docker {
+//                    image 'maven:3.3.3'
+//                    args '-v /tmp/ninja/.m2:/root/.m2 --network dd-network'
+//                }
+//            }
+//            steps {
+//                sh 'mvn clean test -f ./ci/pom.xml'
+//            }
+//        }
 
         stage('Docker TAG PROD') {
             agent any
@@ -86,8 +85,7 @@ pipeline {
         stage('Docker Deploy PROD') {
             agent any
             steps {
-                //TODO figure out how to rm optionally without failing
-//                sh 'docker container rm -f ninja-belt-prod'
+                sh 'docker container rm -f ninja-belt-prod || true'
                 sh 'docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod javapi/ninja-prod:v4'
 
             }
