@@ -3,7 +3,7 @@
 pipeline {
     agent any
     environment {
-        MVN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
+        MAVEN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
         APPLICATION_NAME='ninja'
         APPLICATION_TAG_VERSION='v0.0.1-WIP'
@@ -56,6 +56,8 @@ pipeline {
         stage('Docker Deploy QA') {
             agent any
             steps {
+                sh 'docker container stop ninja-belt-qa || true'
+                sh 'docker network disconnect dd-network ninja-belt-qa || true'
                 sh 'docker container rm -f ninja-belt-qa || true'
                 sh "docker run -d -p 8085:8081 --name ninja-belt-qa -h ninja-belt-qa --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
 
@@ -91,8 +93,10 @@ pipeline {
         stage('Docker Deploy PROD') {
             agent any
             steps {
+                sh 'docker container stop ninja-belt-prod || true'
+                sh 'docker network disconnect dd-network ninja-belt-prod || true'
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh "docker run -d -p 8086:8081 --name ninja-belt-prod --h ninja-belt-prod --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
+                sh "docker run -d -p 8086:8081 --name ninja-belt-prod -h ninja-belt-prod --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
             }
         }
     }
