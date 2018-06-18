@@ -13,7 +13,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "${params.MAVEN_ARGS}"
+                    args '-v ./.m2:/root/.m2'
                 }
             }
             steps {
@@ -24,7 +24,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "${params.MAVEN_ARGS}"
+                    args '${params.MAVEN_ARGS}'
                 }
             }
             steps {
