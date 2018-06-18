@@ -13,25 +13,6 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage("SonarQube analysis") {
-            agent {
-                docker {
-                    image 'maven:3.3.3'
-                }
-            }
-            steps {
-                withSonarQubeEnv('sonarqubeServer') {
-                    sh 'mvn clean package sonar:sonar'
-                }
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
         stage('Maven Package') {
             agent {
                 docker {
@@ -65,10 +46,13 @@ pipeline {
             }
         }
         stage('Integration/E2E Tests') {
-            agent any
+            agent {
+                docker {
+                    image 'maven:3.3.3'
+                }
+            }
             steps {
-                sh 'echo ADDSTEP'
-
+                sh 'mvn clean test -f ./ci/pom.xml'
             }
         }
         stage('Deploy PROD') {
