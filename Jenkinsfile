@@ -2,8 +2,10 @@
 
 pipeline {
     agent any
+    parameters {
+        string(name: 'MAVEN_ARGS', defaultValue: '-v /tmp/ninja/.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
+    }
     environment {
-        MAVEN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
         APPLICATION_NAME='ninja'
         APPLICATION_TAG_VERSION='v0.0.1-WIP'
@@ -13,7 +15,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "${env.MAVEN_ARGS}"
+                    args "${params.MAVEN_ARGS}"
                 }
             }
             steps {
@@ -24,7 +26,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args "${env.MAVEN_ARGS}"
+                    args "${params.MAVEN_ARGS}"
                 }
             }
             steps {
@@ -67,7 +69,7 @@ pipeline {
 //            agent {
 //                docker {
 //                    image 'maven:3.3.3'
-//                    args "${env.MAVEN_ARGS} --network dd-network"
+//                    args "${params.MAVEN_ARGS} --network dd-network"
 //                }
 //            }
 //            steps {
