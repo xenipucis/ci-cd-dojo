@@ -41,9 +41,8 @@ pipeline {
         stage('Deploy QA') {
             agent any
             steps {
-//                sh 'docker stop ninja-belt'
-//                sh 'docker rm ninja-belt'
-                sh 'docker run -d -p 85:8080 --name ninja-belt dockerdonegal/ninja:v4'
+                sh 'docker container rm -f ninja-belt-qa'
+                sh 'docker run -d -p 85:8080 --name ninja-belt-qa dockerdonegal/ninja:v4'
 
             }
         }
@@ -60,7 +59,8 @@ pipeline {
 //        stage('Deploy PROD') {
 //            agent any
 //            steps {
-//                sh 'docker run -d -p 82:8080 dockerdonegal/ninja:v4'
+//                sh 'docker container rm -f ninja-belt-prod'
+//                sh 'docker run -d -p 82:8080 --name ninja-belt-prod dockerdonegal/ninja:v4'
 //
 //            }
 //        }
