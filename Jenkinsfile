@@ -36,14 +36,14 @@ pipeline {
         stage('Docker Build') {
             agent any
             steps {
-                sh "docker build -t ${DOCKER_HUB_ACCOUNT}/ninja:v4 ."
+                sh "docker build -t ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:${APPLICATION_TAG_VERSION} ."
             }
         }
 
         stage('Docker TAG QA') {
             agent any
             steps {
-                sh "docker tag ${DOCKER_HUB_ACCOUNT}/ninja:v4 ${DOCKER_HUB_ACCOUNT}/ninja-qa:v4"
+                sh "docker tag ${DOCKER_HUB_ACCOUNT}/ninja:${APPLICATION_TAG_VERSION} ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
             }
         }
         stage('Docker Push QA') {
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push ${DOCKER_HUB_ACCOUNT}/ninja-qa:v4"
+                    sh "docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
                 }
             }
         }
@@ -59,7 +59,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-qa || true'
-                sh "docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${DOCKER_HUB_ACCOUNT}/ninja-qa:v4"
+                sh "docker run --network dd-network -d -p 8085:8081 --name ninja-belt-qa --hostname ninja-belt-qa ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-qa:${APPLICATION_TAG_VERSION}"
 
             }
         }
@@ -78,7 +78,7 @@ pipeline {
         stage('Docker TAG PROD') {
             agent any
             steps {
-                sh "docker tag ${DOCKER_HUB_ACCOUNT}/ninja:v4 ${DOCKER_HUB_ACCOUNT}/ninja-prod:v4"
+                sh "docker tag ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}:v4 ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
             }
         }
         stage('Docker Push PROD') {
@@ -86,7 +86,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push ${DOCKER_HUB_ACCOUNT}/ninja-prod:v4"
+                    sh "docker push ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
                 }
             }
         }
@@ -94,7 +94,7 @@ pipeline {
             agent any
             steps {
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh "docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${DOCKER_HUB_ACCOUNT}/ninja-prod:v4"
+                sh "docker run --network dd-network -d -p 8086:8081 --name ninja-belt-prod --hostname ninja-belt-prod ${DOCKER_HUB_ACCOUNT}/${APPLICATION_NAME}-prod:${APPLICATION_TAG_VERSION}"
             }
         }
     }
