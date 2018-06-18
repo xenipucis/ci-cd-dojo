@@ -6,14 +6,14 @@ pipeline {
         string(name: 'DOCKER_HUB_ACCOUNT', defaultValue: 'dockerdonegal', description: 'The Docker Hub where youre pulling from and pushing to.')
         string(name: 'APPLICATION_NAME', defaultValue: 'ninja', description: 'The name of the application on the Docker and pipeline context.')
         string(name: 'APPLICATION_TAG_VERSION', defaultValue: 'v0.0.1-WIP', description: 'The application version to be tagged on Docker.')
-        string(name: 'MAVEN_ARGS', defaultValue: '-v ./.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
+        string(name: 'MAVEN_ARGS', defaultValue: '-v .m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
     }
     stages {
         stage('Maven Test') {
             agent {
                 docker {
                     image 'maven:3.3.3'
-                    args '-v ./.m2:/root/.m2'
+                    args '-v .m2:/root/.m2'
                 }
             }
             steps {
