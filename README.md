@@ -1,4 +1,7 @@
-# Docker Donegal - Ninjas Belt
+
+# Docker Donegal - Ninjas Belt 
+### Docker DOJO (Where ninja are born!) 
+Pipeline - Happy Path :)
 ![](images/pipeline-happy-path.png)
 
 
@@ -245,3 +248,5 @@ git branch // to check which branch you are in
 ```
 
 Follow documentation of jenkins (pipelines) at https://jenkins.io/doc/book/pipeline/docker/
+
+![](images/dd-devops-resized.png)
