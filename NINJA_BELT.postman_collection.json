@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "0a816ddc-7888-45f0-bde8-a8534644e0e5",
+		"name": "NINJA_BELT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save Ninja",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"NinjaName\",\n\t\"belt\": {\n\t\t\"color\": \"white\"\n\t},\n\t\"dojo\": {\n\t\t\"name\": \"Donegal\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/ninja/save",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"ninja",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Ninjas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Romero\",\n\t\"belt\": {\n\t\t\"color\": \"white\"\n\t},\n\t\"dojo\": {\n\t\t\"name\": \"Donegal\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/ninja/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"ninja",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PING Ninha Server",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8085/ninja/ping",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8085",
+					"path": [
+						"ninja",
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,4 @@
-# FROM jenkins:2.60.3-alpine
-FROM jenkins/jenkins:2.101-alpine
+FROM jenkins/jenkins:2.127-alpine
 
 USER root
 
@@ -32,7 +31,8 @@ nexus-artifact-uploader \
 slack \
 workflow-aggregator \
 sonar \
-subversion
+subversion \
+sonar-quality-gates
 
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 USER root

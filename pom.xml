@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ie.dockerdonegal.ninja</groupId>
-    <artifactId>ninja-belt</artifactId>
+    <artifactId>ci-cd-dojo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>ninja-belt-parent</name>
+    <name>ci-cd-dojo</name>
     <url>http://ninja.dockerdonegal.com</url>
 
     <modules>

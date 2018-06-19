@@ -6,10 +6,3 @@ server:
 spring:
   application:
     name: ninja-belt
-  data:
-    mongodb:
-      host: ninja.dockerdonegal.ie
-      port: 27017
-      database: ninja
-      username: ninja
-      password: ninja

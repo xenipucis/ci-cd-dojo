@@ -9,6 +9,6 @@ Feature: As a Docker donegal team, we need a way of managing the ninjas and help
     Then the added ninja should be listed
 
     Examples:
-    | ApplicationURL        | ninjaPayload |
-    | http://localhost:8081 | {"name": "Romero", "belt": {"color": "black"}, "dojo": {"name": "Donegal"}} |
-    | http://localhost:8081 | {"name": "GMAN", "belt": {"color": "black"}, "dojo": {"name": "Dublin"}}    |
+    | ApplicationURL            | ninjaPayload                                                                            |
+    | http://ninja-belt-qa:8081 | {"name": "Romero-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Donegals!"}} |
+    | http://ninja-belt-qa:8081 | {"name": "GMAN-ci", "belt": {"color": "black"}, "dojo": {"name": "Up the Dubs!"}}       |
