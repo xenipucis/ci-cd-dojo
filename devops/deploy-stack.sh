@@ -20,7 +20,7 @@ prepare_environment() {
     export STACK=$stack
 
     # Create stack network
-    docker network create --driver overlay --attachable $NETWORK
+    docker network create --driver overlay --attachable --subnet=10.0.0.0/16 $NETWORK
 }
 
 echo_stack_details() {

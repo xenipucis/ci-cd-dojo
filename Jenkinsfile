@@ -62,7 +62,7 @@ pipeline {
                 sh 'docker container stop ninja-belt-qa || true'
                 sh 'docker network disconnect dd-network ninja-belt-qa || true'
                 sh 'docker container rm -f ninja-belt-qa || true'
-                sh "docker run -d -p 8085:8081 --name ninja-belt-qa -h ninja-belt-qa --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
+                sh "docker run -d -p 8085:8081 --name ninja-belt-qa -h ninja-belt-qa --network dd-network --ip 10.0.0.11 ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
 
             }
         }
@@ -98,7 +98,7 @@ pipeline {
                 sh 'docker container stop ninja-belt-prod || true'
                 sh 'docker network disconnect dd-network ninja-belt-prod || true'
                 sh 'docker container rm -f ninja-belt-prod || true'
-                sh "docker run -d -p 8086:8081 --name ninja-belt-prod -h ninja-belt-prod --network dd-network ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
+                sh "docker run -d -p 8086:8081 --name ninja-belt-prod -h ninja-belt-prod --network dd-network --ip 10.0.0.13 ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
             }
         }
     }

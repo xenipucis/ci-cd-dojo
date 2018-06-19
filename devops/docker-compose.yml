@@ -4,6 +4,7 @@ version: '3.6'
 services:
    jenkins:
      image: javapi/dd-jenkins:latest
+     hostname: jenkins
      user: root
      ports:
        - 8080:8080
@@ -12,7 +13,8 @@ services:
        restart_policy:
          condition: any
      networks:
-     - dd-network
+        dd-network:
+          ipv4_address: 10.0.0.4
      volumes:
        - jenkins_home:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
        - /var/run/docker.sock:/var/run/docker.sock
