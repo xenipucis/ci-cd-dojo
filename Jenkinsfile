@@ -9,7 +9,7 @@ pipeline {
         MAVEN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
         APPLICATION_NAME='ninja'
-        APPLICATION_TAG_VERSION='v0.0.1-rc2'
+        APPLICATION_TAG_VERSION='v0.0.1-rc3'
     }
     stages {
         stage('Maven Test') {
