@@ -34,8 +34,5 @@ sonar \
 subversion \
 sonar-quality-gates
 
-COPY ./home/ /var/jenkins_home/
-RUN ls -laN /var/jenkins_home/*
-
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 USER root
