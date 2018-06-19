@@ -2,9 +2,6 @@
 
 pipeline {
     agent any
-    parameters {
-        string(name: 'MAVEN_ARGS', defaultValue: '-v /tmp/ninja/.m2:/root/.m2', description: 'The otions to be passed as args to the maven image (docker).')
-    }
     environment {
         MAVEN_ARGS='-v /tmp/ninja/.m2:/root/.m2'
         DOCKER_HUB_ACCOUNT='javapi'
