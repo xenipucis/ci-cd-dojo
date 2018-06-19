@@ -1,10 +1,8 @@
 # Docker Donegal - Ninjas Belt
-
-## Prerequisite
-- This project assumes you're using Docker 18+
+![](images/pipeline-happy-path.png)
 
 
-## Fork our projectto your github accout
+## Fork our project to your github accout
 
 Go to https://github.com/dockerdonegal/ci-cd-dojo and click on the **Fork** button in the top right corner. 
 
