@@ -140,9 +140,10 @@ Open your browser at `http://127.0.0.1:8080/`
 
 ### Add Credential
 We will be adding your **DockerHub** and **GitHub** login details to jenkins.
-> NOTE: Very Important when adding your credentials to use the following **IDs**
-> github = githubid
-> dockerhub = dockerhubid
+> NOTE: Very Important when adding your credentials to use the following **IDs:**
+> * github = githubid
+> * dockerhub = dockerhubid
+
 
 From the screen presented, click on Credential -> global -> add credentails. 
 We will be adding your credentials for (github, dockerhub)
@@ -173,7 +174,12 @@ Remember the ID for each is important.
 ![](images/credential-all.png)
 
 ### Create your pipeline JOB
-Now we can create our first pipeline job.
+Now we can create our first pipeline job.\
+Back to Jenkins Home click on **New Item**.
+![](images/credentials.png)
+
+Then create a new **multibranch Pipeline**:
+![](images/dd-create-new-pipeline.png)
 
 ### Run your JOB
 
@@ -181,7 +187,8 @@ Now we can create our first pipeline job.
 
 ## Test 1
 ```
-   jenkins: image: 
+   jenkins: 
+    image: 
 ```
 
 ## Test 2
@@ -196,55 +203,6 @@ docker container prune -f
 docker system prune --volumes
 # Remove QA and PROD Containers
 docker container rm -f ninja-belt-prod ninja-belt-qa
-```
-
-
-
-
-
-
-
-
-
-```
-mongo --host=ninja.dockerdonegal.ie:27017 -u ninja -p ninja ninja
-```
-
-
-```
-POST: http://localhost:8080/ninja/save
-
-```
-
-
-```
-{
-	"name": "Romero",
-	"belt": {
-		"color": "white"
-	},
-	"dojo": {
-		"name": "Donegal"
-	}
-}
-```
-
-```
-{
-   	"name": "Gearoid",
-   	"belt": {
-   		"color": "white"
-   	},
-   	"dojo": {
-   		"name": "Dublin"
-   	}
-}
-```
-```
-git flow init //accept defaults
-git flow feature start add-unit-tests
-git branch // to check which branch you are in
-
 ```
 
 Follow documentation of jenkins (pipelines) at https://jenkins.io/doc/book/pipeline/docker/
