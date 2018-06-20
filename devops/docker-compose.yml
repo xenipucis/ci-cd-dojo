@@ -1,0 +1,27 @@
+version: '3.6'
+
+# TODO Replace dockerdonegal entry with your dockerhub account
+services:
+   jenkins:
+     image: dockerdonegal/dd-jenkins:latest
+     hostname: jenkins
+     user: root
+     ports:
+       - 8080:8080
+     deploy:
+       replicas: 1
+       restart_policy:
+         condition: any
+     networks:
+        dd-network:
+          ipv4_address: 10.0.0.4
+     volumes:
+       - jenkins_home:/var/jenkins_home #Remember that, the tmp directory is designed to be wiped on system reboot.
+       - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  dd-network:
+    external: true
+
+volumes:
+  jenkins_home:

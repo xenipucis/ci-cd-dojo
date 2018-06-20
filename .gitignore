@@ -1,5 +1,7 @@
 .idea/
 docker/dev/mongo/db
+devops/data
 **/*.iml
 web/target
-
+**/target
+./.m2
