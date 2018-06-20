@@ -2,6 +2,7 @@
 # Docker Donegal - Ninjas Belt 
 ### Docker DOJO (Where Ninjas are born!) 
 - Pipeline - Happy Path :)
+
 ![](images/pipeline-happy-path.png)
 
 
