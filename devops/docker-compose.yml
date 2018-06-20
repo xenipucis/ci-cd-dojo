@@ -1,9 +1,9 @@
 version: '3.6'
 
-# TODO Replace any javapi or dockerdonegal entry with your dockerhub account
+# TODO Replace dockerdonegal entry with your dockerhub account
 services:
    jenkins:
-     image: javapi/dd-jenkins:latest
+     image: dockerdonegal/dd-jenkins:latest
      hostname: jenkins
      user: root
      ports:
@@ -25,8 +25,3 @@ networks:
 
 volumes:
   jenkins_home:
-  sonarqube_bundled_plugins:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
-  mongo:
