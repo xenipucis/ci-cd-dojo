@@ -235,3 +235,11 @@ docker container rm -f ninja-belt-prod ninja-belt-qa
 - Follow documentation of jenkins (pipelines) at https://jenkins.io/doc/book/pipeline/docker/
 
 ![](images/dd-devops-resized.png)
+
+
+### Authors
+- Warm thank to the organisers for the hard work:
+    - Gearoid Maguire
+    - Michael McGrath
+    - Denis Bourne
+    - Rômero Ricardo
