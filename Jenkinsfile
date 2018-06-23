@@ -80,7 +80,7 @@ pipeline {
         stage('Docker TAG PROD') {
             agent any
             steps {
-                sh "docker tag ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}:v4 ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
+                sh "docker tag ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}:${env.APPLICATION_TAG_VERSION} ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-prod:${env.APPLICATION_TAG_VERSION}"
             }
         }
         stage('Docker Push PROD') {
