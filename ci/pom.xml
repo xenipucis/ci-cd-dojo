@@ -69,6 +69,7 @@
             <groupId>ie.dockerdonegal.ninja</groupId>
             <artifactId>ninja-belt-service</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

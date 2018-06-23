@@ -5,8 +5,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import ie.dockerdonegal.ninja.ci.NinjaIntegrationTestConfig;
-import ie.dockerdonegal.ninja.ci.dto.NinjaDTO;
-import ie.dockerdonegal.ninja.ci.dto.NinjasResponse;
 import ie.dockerdonegal.ninja.dto.NinjaDTO;
 import ie.dockerdonegal.ninja.response.NinjasResponse;
 import org.junit.Assert;
