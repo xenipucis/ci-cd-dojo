@@ -7,6 +7,8 @@ import cucumber.api.java.en.When;
 import ie.dockerdonegal.ninja.ci.NinjaIntegrationTestConfig;
 import ie.dockerdonegal.ninja.ci.dto.NinjaDTO;
 import ie.dockerdonegal.ninja.ci.dto.NinjasResponse;
+import ie.dockerdonegal.ninja.dto.NinjaDTO;
+import ie.dockerdonegal.ninja.response.NinjasResponse;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
