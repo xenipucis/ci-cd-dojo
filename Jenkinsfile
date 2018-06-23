@@ -52,7 +52,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhubid', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-                    sh "docker push ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:v${env.APPLICATION_TAG_VERSION}"
+                    sh "docker push ${env.DOCKER_HUB_ACCOUNT}/${env.APPLICATION_NAME}-qa:${env.APPLICATION_TAG_VERSION}"
                 }
             }
         }
