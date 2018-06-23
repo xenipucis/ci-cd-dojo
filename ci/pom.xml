@@ -65,10 +65,17 @@
             <version>${jackson-databind.version}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>ie.dockerdonegal.ninja</groupId>
             <artifactId>ninja-belt-service</artifactId>
             <version>${project.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
